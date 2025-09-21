@@ -32,7 +32,7 @@ export default class Funcionario {
 }
 
 export enum NivelPermissao {
-    ADMINISTRADOR,
-    ENGENHEIRO,
-    OPERADOR
+    ADMINISTRADOR = 'ADMINISTRADOR',
+    ENGENHEIRO = 'ENGENHEIRO',
+    OPERADOR = 'OPERADOR'
 }

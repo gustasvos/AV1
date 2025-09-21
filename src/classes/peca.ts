@@ -28,12 +28,12 @@ export default class Peca implements Salvador, Carregador {
 }
 
 export enum TipoPeca {
-    NACIONAL,
-    IMPORTADA
+    NACIONAL = 'NACIONAL',
+    IMPORTADA = 'IMPORTADA'
 }
 
 export enum StatusPeca {
-    EM_PRODUCAO,
-    EM_TRANSPORTE,
-    PRONTA
+    EM_PRODUCAO = 'EM PRODUÇÃO',
+    EM_TRANSPORTE = 'EM TRANSPORTE',
+    PRONTA = 'PRONTA'
 }

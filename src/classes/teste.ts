@@ -20,12 +20,12 @@ export default class Teste implements Salvador, Carregador {
 }
 
 export enum TipoTeste {
-    ELETRICO,
-    HIDRAULICO,
-    AERODINAMICO
+    ELETRICO = 'ELÉTRICO',
+    HIDRAULICO = 'HIDRÁULICO',
+    AERODINAMICO = 'AERODINAMICO'
 }
 
 export enum ResultadoTeste {
-    APROVADO,
-    REPROVADO
+    APROVADO = 'APROVADO',
+    REPROVADO = 'REPROVADO'
 }

@@ -33,7 +33,7 @@ export default class Etapa implements Inicializador, Finalizador {
 }
 
 export enum StatusEtapa {
-    PENDENTE,
-    ANDAMENTO,
-    CONCLUIDA
+    PENDENTE = 'PENDENTE',
+    ANDAMENTO = 'ANDAMENTO',
+    CONCLUIDA = 'CONCLUIDA'
 }
