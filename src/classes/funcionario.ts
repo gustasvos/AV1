@@ -17,6 +17,24 @@ export default class Funcionario {
         this.nivelPermissao = nivelPermissao
     }
 
+    // getters
+
+    get getId(): string { return this.id }
+
+    get getNome(): string { return this.nome }
+
+    get getTelefone(): string { return this.telefone }
+
+    get getEndereco(): string { return this.endereco }
+
+    get getUsuario(): string { return this.usuario }
+
+    get getSenha(): string { return this.senha }
+
+    get getNivelPermissao(): NivelPermissao { return this.nivelPermissao }
+
+    // métodos
+
     public autenticar = (usuario: string, senha:string): boolean => {
         return true
     }

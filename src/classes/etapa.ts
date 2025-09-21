@@ -15,6 +15,18 @@ export default class Etapa implements Inicializador, Finalizador {
         this.funcionarios = funcionarios
     }
 
+    // getters
+
+    get getNome(): string { return this.nome }
+
+    get getPrazo(): string { return this.prazo }
+
+    get getStatus(): StatusEtapa { return this.status }
+
+    get getFuncionarios(): Funcionario[] { return this.funcionarios }
+
+    // métodos
+
     public iniciar = (): void => {
 
     }

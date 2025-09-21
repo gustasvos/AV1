@@ -10,6 +10,10 @@ export default class Teste implements Salvador, Carregador {
         this.resultado = resultado
     }
 
+    get getTipo(): TipoTeste { return this.tipo }
+
+    get getResultado(): ResultadoTeste { return this.resultado }
+
     public salvar = (): void => {
 
     }

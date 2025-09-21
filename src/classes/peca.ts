@@ -14,6 +14,17 @@ export default class Peca implements Salvador, Carregador {
         this.status = status
     }
 
+    // getters
+
+    get getNome(): string { return this.nome }
+
+    get getTipo(): TipoPeca { return this.tipo }
+
+    get getFornecedor(): string { return this.fornecedor }
+
+    get getStatus(): StatusPeca { return this.status }
+
+
     public atualizarStatus = (novoStatus: StatusPeca): void => {
         this.status = novoStatus
     }
