@@ -22,7 +22,7 @@ export default class Aeronave implements Salvador, Carregador {
 
     get getModelo(): string { return this.modelo }
 
-    // get getTipo() { return this.tipo }
+    get getTipo() { return this.tipo }
 
     get getCapacidade(): number { return this.capacidade }
 
@@ -33,7 +33,14 @@ export default class Aeronave implements Salvador, Carregador {
     // set setCodigo(novoCodigo) { return this.codigo = novoCodigo }
 
     public detalhes = (): void => {
-
+        console.log(`
+        Detalhes da Aeronave ${this.getCodigo}
+        Código: ${this.getCodigo}
+        Modelo: ${this.getModelo}
+        Tipo: ${this.getTipo}
+        Capacidade: ${this.getCapacidade}
+        Alcance: ${this.getAlcance}
+        `)
     }
 
     public salvar = (): void => {
@@ -46,6 +53,6 @@ export default class Aeronave implements Salvador, Carregador {
 }
 
 export enum TipoAeronave {
-    COMERCIAL,
-    MILITAR
+    COMERCIAL = 'COMERCIAL',
+    MILITAR = 'MILITAR'
 }
