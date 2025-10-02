@@ -22,7 +22,7 @@ export default class Aeronave implements Salvador, Carregador {
 
     get getModelo(): string { return this.modelo }
 
-    get getTipo() { return this.tipo }
+    get getTipo(): TipoAeronave { return this.tipo }
 
     get getCapacidade(): number { return this.capacidade }
 
@@ -46,11 +46,11 @@ export default class Aeronave implements Salvador, Carregador {
     }
 
     public salvar = (): void => {
-
+        
     }
 
     public carregar = (): void => {
-
+        
     }
 }
 

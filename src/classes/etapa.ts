@@ -32,15 +32,21 @@ export default class Etapa implements Inicializador, Finalizador {
     }
 
     public finalizar = (): void => {
-
+        
     }
 
     public associarFuncionario = (f: Funcionario): void => {
 
     }
 
-    public listarFuncionarios = (): Funcionario[] => {
-        return []
+    public listarFuncionarios = (): string => {
+        
+        // return (`
+        //     Funcionários associados a etapa: ${this.getNome}: 
+        //     ${this.funcionarios.forEach(f => {
+        //         `${f.getNome}`
+        //     })}
+        //     `)
     }
 }
 
@@ -49,3 +55,15 @@ export enum StatusEtapa {
     ANDAMENTO = 'ANDAMENTO',
     CONCLUIDA = 'CONCLUIDA'
 }
+
+
+// public detalhes = (): void => {
+//     console.log(`
+//     Detalhes da Aeronave ${this.getCodigo}
+//     Código: ${this.getCodigo}
+//     Modelo: ${this.getModelo}
+//     Tipo: ${this.getTipo}
+//     Capacidade: ${this.getCapacidade}
+//     Alcance: ${this.getAlcance}
+//     `)
+// }

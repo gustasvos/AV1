@@ -1,3 +1,3 @@
 export default interface Finalizador {
-    finalizar(): void
+    finalizar(): void 
 }
