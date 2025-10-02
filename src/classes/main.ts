@@ -19,11 +19,18 @@ as.forEach(a => {
 let fun1: Funcionario = new Funcionario('2', 'Gabriel', '123123123', 'endereco y', 'gabriel-user', 'senha-gabriel', NivelPermissao.OPERADOR)
 let fun2: Funcionario = new Funcionario('3', 'Ana', '111111111', 'endereco a', 'ana-user', 'ana-senha', NivelPermissao.ENGENHEIRO)
 let fun3: Funcionario = new Funcionario('4', 'Mateus', '222222222', 'endereco m', 'mateus-user', 'mateus-senha', NivelPermissao.ENGENHEIRO)
+let fun4: Funcionario = new Funcionario('5', 'TESTE', '55555555', 'endereco TESTE', 'TESTE-USER', 'SENHA-TESTE', NivelPermissao.ENGENHEIRO)
 
 let funs: Funcionario[] = [fun1, fun2, fun3]
 
 
 let etapa = new Etapa("etapa 1", "12/10", StatusEtapa.PENDENTE, funs)
 console.log(etapa.listarFuncionarios())
+etapa.associarFuncionario(fun4)
+etapa.iniciar()
+console.log(etapa.getStatus)
+etapa.finalizar()
+console.log(etapa.getStatus)
+
 
 // aeronave.detalhes()
