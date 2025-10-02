@@ -1,6 +1,7 @@
 import Aeronave, { TipoAeronave } from "./aeronave";
 import Etapa , { StatusEtapa } from "./etapa";
 import Funcionario, { NivelPermissao } from "./funcionario";
+import Peca, { StatusPeca, TipoPeca } from "./peca";
 
 let aeronave = new Aeronave('01', 'modelo1', TipoAeronave.COMERCIAL, 150, 200)
 let aeronave2 = new Aeronave('02', 'modelo1', TipoAeronave.MILITAR, 150, 200)
@@ -32,5 +33,9 @@ console.log(etapa.getStatus)
 etapa.finalizar()
 console.log(etapa.getStatus)
 
+let peca = new Peca('peca1', TipoPeca.NACIONAL, 'fornecedor1', StatusPeca.EM_PRODUCAO)
+console.log(peca)
+peca.atualizarStatus(StatusPeca.EM_TRANSPORTE)
+console.log(peca)
 
 // aeronave.detalhes()

@@ -9,11 +9,12 @@ export default class Etapa implements Inicializador, Finalizador {
     public funcionarios: Funcionario[]
     public etapaAnterior?: Etapa
 
-    constructor(nome: string, prazo: string, status: StatusEtapa, funcionarios: Funcionario[]) {
+    constructor(nome: string, prazo: string, status: StatusEtapa, funcionarios: Funcionario[], etapaAnterior?: Etapa) {
         this.nome = nome
         this.prazo = prazo
         this.status = status
         this.funcionarios = funcionarios
+        this.etapaAnterior = etapaAnterior
     }
 
     // getters
@@ -76,14 +77,10 @@ export enum StatusEtapa {
 }
 
 
-// public detalhes = (): void => {
-//     console.log(`
-//     Detalhes da Aeronave ${this.getCodigo}
-//     Código: ${this.getCodigo}
-//     Modelo: ${this.getModelo}
-//     Tipo: ${this.getTipo}
-//     Capacidade: ${this.getCapacidade}
-//     Alcance: ${this.getAlcance}
-//     `)
-// }
-
+// As etapas de produção também farão parte do sistema. Cada etapa terá um nome, um
+// prazo para conclusão e um status que poderá estar como pendente, em andamento ou
+// concluída. É importante que o avanço das etapas siga uma ordem lógica, impedindo
+// que uma etapa seja concluída sem que a anterior tenha sido finalizada. Métodos para
+// iniciar e finalizar etapas deverão ser desenvolvidos, sempre garantindo a consistência
+// do processo de produção. Cada etapa deverá estar vinculada a uma aeronave e poderá
+// ter funcionários responsáveis por sua execução.
