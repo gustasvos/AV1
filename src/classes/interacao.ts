@@ -1,6 +1,7 @@
 import * as readline from 'readline';
 import Aeronave, { TipoAeronave } from './aeronave';
 import Funcionario, { NivelPermissao } from './funcionario';
+import Peca, { StatusPeca, TipoPeca } from './peca';
 
 console.log(`
     1. Aeronave
@@ -34,6 +35,9 @@ export default class Interacao {
                     break
                 case '2':
                     this.criarFuncionario()
+                    break
+                case '3':
+                    this.criarPeca()
                     break
                 default:
                     console.log("Opção inválida, tente novamente.")
@@ -123,7 +127,6 @@ export default class Interacao {
         })
     }
 
-    // Função para selecionar o nível de permissão do funcionário
     private selecionarNivelPermissao(callback: (nivelPermissao: NivelPermissao) => void): void {
         console.log("\nSelecione o nível de permissão do funcionário:")
         console.log("1 - ADMINISTRADOR")
@@ -141,10 +144,77 @@ export default class Interacao {
                 console.log("Opção inválida. Por favor, digite 1, 2 ou 3.")
                 this.selecionarNivelPermissao(callback) // Repete a pergunta se a opção for inválida
             }
-        });
+        })
     }
 
-    // Função para encerrar a interação
+    // CRIAR PEÇA
+    public criarPeca = (): void => {
+        this.pedirInput('Nome da peça: ', (nome) => {
+            this.pedirInput('Fornecedor: ', (fornecedor) => {
+                this.selecionarTipoPeca((tipoPeca) => {
+                    this.selecionarStatusPeca((statusPeca) => {
+                        const peca = new Peca(
+                            nome,
+                            tipoPeca,
+                            fornecedor,
+                            statusPeca
+                        )
+
+                        console.log("\nPeça cadastrada com sucesso!")
+                        console.log(`
+                        Nome: ${peca.getNome}
+                        Tipo: ${peca.getTipo}
+                        Fornecedor: ${peca.getFornecedor}
+                        Peça: ${peca.getStatus}
+                        `)
+
+                        this.fechar()
+                    })
+                })
+            })
+        })
+    }
+
+    private selecionarTipoPeca(callback: (tipoPeca: TipoPeca) => void): void {
+        console.log("\nSelecione o tipo desta peça:")
+        console.log("1 - NACIONAL")
+        console.log("2 - IMPORTADA")
+
+        this.pedirInput("Digite o número correspondente: ", (escolha) => {
+            if (escolha === '1') {
+                callback(TipoPeca.NACIONAL)
+            } else if (escolha === '2') {
+                callback(TipoPeca.IMPORTADA)
+            } else {
+                console.log("Opção inválida. Por favor, digite uma das opções disponíveis.")
+                this.selecionarTipoPeca(callback) // Repete a pergunta se a opção for inválida
+            }
+        })
+    }
+
+    private selecionarStatusPeca(callback: (status: StatusPeca) => void): void {
+        console.log("\nSelecione o status inicial desta peça:")
+        console.log("1 - EM PRODUÇÃO")
+        console.log("2 - EM TRANSPORTE")
+        console.log("3 - PRONTA")
+
+        this.pedirInput('Digite o número correspondente: ', (escolha) => {
+            if (escolha === '1') {
+                callback(StatusPeca.EM_PRODUCAO)
+            }
+            else if (escolha === '2') {
+                callback(StatusPeca.EM_TRANSPORTE)
+            }
+            else if (escolha === '3') {
+                callback(StatusPeca.PRONTA)
+            }
+            else {
+                console.log('Opção inválida. Por favor, digite uma das opções disponíveis.')
+                this.selecionarStatusPeca(callback)
+            }
+        })
+    }
+
     private fechar(): void {
         this.rl.close()
     }
