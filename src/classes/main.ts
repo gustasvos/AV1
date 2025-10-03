@@ -5,8 +5,8 @@ import Funcionario, { NivelPermissao } from "./funcionario";
 import Interacao from "./interacao";
 import Peca, { StatusPeca, TipoPeca } from "./peca";
 
-// const interacao: Interacao = new Interacao
-// interacao.iniciar()
+const interacao: Interacao = new Interacao
+interacao.iniciar()
 
 // console.log(`
 //     1. Aeronave
@@ -69,17 +69,17 @@ import Peca, { StatusPeca, TipoPeca } from "./peca";
 
 // iniciar()
 
-let aeronave = new Aeronave(0, 'modelo1', TipoAeronave.COMERCIAL, 150, 200)
-let aeronave2 = new Aeronave(0, 'modelo1', TipoAeronave.MILITAR, 150, 200)
-let aeronave3 = new Aeronave(0, 'modelo2', TipoAeronave.COMERCIAL, 150, 200)
-let aeronave4 = new Aeronave(0, 'modelo2', TipoAeronave.MILITAR, 150, 500)
-let aeronave5 = new Aeronave(0, 'modelo3', TipoAeronave.MILITAR, 150, 400)
+// let aeronave = new Aeronave(0, 'modelo1', TipoAeronave.COMERCIAL, 150, 200)
+// let aeronave2 = new Aeronave(0, 'modelo1', TipoAeronave.MILITAR, 150, 200)
+// let aeronave3 = new Aeronave(0, 'modelo2', TipoAeronave.COMERCIAL, 150, 200)
+// let aeronave4 = new Aeronave(0, 'modelo2', TipoAeronave.MILITAR, 150, 500)
+// let aeronave5 = new Aeronave(0, 'modelo3', TipoAeronave.MILITAR, 150, 400)
 
-let as = [aeronave, aeronave2, aeronave3, aeronave4, aeronave5]
+// let as = [aeronave, aeronave2, aeronave3, aeronave4, aeronave5]
 
-as.forEach(a => {
-    a.salvar()
-});
+// as.forEach(a => {
+//     a.salvar()
+// });
 
 // // funcionario
 

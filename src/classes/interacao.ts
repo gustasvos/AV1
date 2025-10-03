@@ -2,6 +2,7 @@ import * as readline from 'readline';
 import Aeronave, { TipoAeronave } from './aeronave';
 import Funcionario, { NivelPermissao } from './funcionario';
 import Peca, { StatusPeca, TipoPeca } from './peca';
+import Teste, { ResultadoTeste, TipoTeste } from './teste';
 
 // menu inicial
 const menuInicial = (): void => {
@@ -11,7 +12,8 @@ Selecione qual item deseja cadastrar:
 1. Aeronave
 2. Funcionário
 3. Peça
-4. Etapa
+4. Teste
+5. Etapa
 `)
 } 
 
@@ -47,6 +49,9 @@ export default class Interacao {
                     break
                 case '3':
                     this.criarPeca()
+                    break
+                case '4':
+                    this.criarTeste()
                     break
                 default:
                     console.log("Opção inválida, tente novamente.")
@@ -117,7 +122,7 @@ export default class Interacao {
                                         nivelPermissao
                                     )
 
-                                    console.log("\nFuncionário cadastrado com sucesso!")
+                                    console.log("\nFuncionário cadastrado com sucesso.")
                                     console.log(`
                                     ID: ${funcionario.getId}
                                     Nome: ${funcionario.getNome}
@@ -170,7 +175,7 @@ export default class Interacao {
                             statusPeca
                         )
 
-                        console.log("\nPeça cadastrada com sucesso!")
+                        console.log("\nPeça cadastrada com sucesso.")
                         console.log(`
                         Nome: ${peca.getNome}
                         Tipo: ${peca.getTipo}
@@ -221,6 +226,68 @@ export default class Interacao {
             else {
                 console.log('Opção inválida. Por favor, digite uma das opções disponíveis.')
                 this.selecionarStatusPeca(callback)
+            }
+        })
+    }
+
+    // CRIAR TESTE
+    public criarTeste = (): void => {
+        this.selecionarTipoTeste((tipoTeste) => {
+            this.selecionarResultadoTeste((resultadoTeste) => {
+                const teste = new Teste(
+                    tipoTeste,
+                    resultadoTeste
+                )
+
+                console.log('Teste criado com sucesso.')
+                console.log(`
+                        Tipo: ${teste.getTipo}
+                        Resultado: ${teste.getResultado}
+                `)
+                
+                this.iniciar()
+            })
+        })
+    }
+
+    private selecionarTipoTeste(callback: (tipoTeste: TipoTeste) => void ): void {
+        console.log("\nSelecione o tipo deste teste: ")
+        console.log("1 - ELÉTRICO")
+        console.log("2 - HIDRÁULICO")
+        console.log("3 - AERODINÂMICO")
+
+        this.pedirInput('Digite o número correspondente: ', (escolha) => {
+            if (escolha === '1') {
+                callback(TipoTeste.ELETRICO)
+            }
+            else if (escolha === '2') {
+                callback(TipoTeste.HIDRAULICO)
+            }
+            else if (escolha === '3') {
+                callback(TipoTeste.AERODINAMICO)
+            }
+            else {
+                console.log('Opção inválida. Por favor, digite uma das opções disponíveis.')
+                this.selecionarTipoTeste(callback)
+            }
+        })
+    }
+
+    private selecionarResultadoTeste(callback: (resultadoTeste: ResultadoTeste) => void ): void {
+        console.log("\nSelecione o resultado deste teste: ")
+        console.log("1 - APROVADO")
+        console.log("2 - REPROVADO")
+
+        this.pedirInput('Digite o número correspondente: ', (escolha) => {
+            if (escolha === '1') {
+                callback(ResultadoTeste.APROVADO)
+            }
+            else if (escolha === '2') {
+                callback(ResultadoTeste.REPROVADO)
+            }
+            else {
+                console.log('Opção inválida. Por favor, digite uma das opções disponíveis.')
+                this.selecionarResultadoTeste(callback)
             }
         })
     }
