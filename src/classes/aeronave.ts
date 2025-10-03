@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+import path from "path"
 import Carregador from "../interfaces/carregador"
 import Salvador from "../interfaces/salvador"
 
@@ -51,7 +53,37 @@ export default class Aeronave implements Salvador, Carregador {
     }
 
     public salvar = (): void => {
-        
+        const aeronaveData = {
+            codigo: this.getCodigo,
+            mdoelo: this.getModelo,
+            tipo: this.getTipo,
+            capacidade: this.getCapacidade,
+            alcance: this.getAlcance
+        }
+
+        const publicDirPath = path.join(__dirname, '..', 'public')
+        const filePath = path.join(__dirname, '..', 'public', 'aeronaves.json')
+
+        if (!fs.existsSync(publicDirPath)) {
+            fs.mkdirSync(publicDirPath, { recursive: true })
+        }
+
+        try {
+            let aeronaves = []
+
+            if (fs.existsSync(filePath)) {
+                const data = fs.readFileSync(filePath, 'utf-8')
+                aeronaves = JSON.parse(data) // converte json em array de objetos
+            }
+
+            aeronaves.push(aeronaveData)
+
+            fs.writeFileSync(filePath, JSON.stringify(aeronaves, null, 2), 'utf-8')
+            console.log("Aeronave salva com sucesso.")
+        }
+        catch (err) {
+            console.log(`Erro ao salvar a aeronave: ${err}`)
+        }
     }
 
     public carregar = (): void => {
