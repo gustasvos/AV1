@@ -2,14 +2,15 @@ import Carregador from "../interfaces/carregador"
 import Salvador from "../interfaces/salvador"
 
 export default class Aeronave implements Salvador, Carregador {
-    public codigo: string
+    public codigo: number
     public modelo: string
     public tipo: TipoAeronave
     public capacidade: number
     public alcance: number
+    private static nextCodigo: number = 1
 
-    constructor(codigo: string, modelo: string, tipo: TipoAeronave, capacidade: number, alcance: number) {
-        this.codigo = codigo
+    constructor(codigo: number, modelo: string, tipo: TipoAeronave, capacidade: number, alcance: number) {
+        this.codigo = Aeronave.nextCodigo++
         this.modelo = modelo
         this.tipo = tipo
         this.capacidade = capacidade
@@ -18,7 +19,7 @@ export default class Aeronave implements Salvador, Carregador {
 
     // getters
 
-    get getCodigo(): string { return this.codigo }
+    get getCodigo(): number { return this.codigo }
 
     get getModelo(): string { return this.modelo }
 

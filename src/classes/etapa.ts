@@ -53,9 +53,14 @@ export default class Etapa implements Inicializador, Finalizador {
 
     public associarFuncionario = (f: Funcionario): void => {
 
-        this.funcionarios.push(f)
-        console.log(`Funcionário ${f.getId} (${f.getNome}) foi adicionado a ${this.getNome} com sucesso!\n `)
-        this.listarFuncionarios()
+        if (!this.funcionarios.includes(f)) {
+            console.log(`Funcionário ${f.getId} já está associado a esta etapa.\n`)
+        }
+        else {
+            this.funcionarios.push(f)
+            console.log(`Funcionário ${f.getId} (${f.getNome}) foi adicionado a ${this.getNome} com sucesso!\n `)
+            this.listarFuncionarios()
+        }
     }
 
     public listarFuncionarios = (): void => {

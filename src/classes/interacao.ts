@@ -3,12 +3,18 @@ import Aeronave, { TipoAeronave } from './aeronave';
 import Funcionario, { NivelPermissao } from './funcionario';
 import Peca, { StatusPeca, TipoPeca } from './peca';
 
-console.log(`
-    1. Aeronave
-    2. Funcionário
-    3. Peça
-    4. Etapa
+// menu inicial
+const menuInicial = (): void => {
+    console.log(`
+Selecione qual item deseja cadastrar:
+
+1. Aeronave
+2. Funcionário
+3. Peça
+4. Etapa
 `)
+} 
+
 
 export default class Interacao {
     private rl: readline.Interface;
@@ -28,6 +34,9 @@ export default class Interacao {
     }
 
     public iniciar(): void {
+
+        menuInicial()
+
         this.pedirInput("Escoha:", (res) => {
             switch (res) {
                 case '1':
@@ -48,26 +57,27 @@ export default class Interacao {
 
     // CRIAR AERONAVE
     public criarAeronave(): void {
-        this.pedirInput("Código da aeronave: ", (codigo) => {
+        // this.pedirInput("Código da aeronave: ", (codigo) => {
             this.pedirInput("Modelo da aeronave: ", (modelo) => {
                 this.pedirInput("Capacidade da aeronave: ", (capacidade) => {
                     this.pedirInput("Alcance da aeronave (em km): ", (alcance) => {
                         this.selecionarTipoAeronave((tipo) => {
                             const aeronave = new Aeronave(
-                                codigo,
+                                0,
                                 modelo,
                                 tipo,
                                 parseInt(capacidade),
                                 parseInt(alcance)
                             )
 
+                            console.log('\nAeronave cadastrada com sucesso.')
                             aeronave.detalhes()
 
-                            this.fechar()
+                            this.iniciar()
                         })
                     })
                 })
-            })
+            // })
         })
     }
 
@@ -85,12 +95,12 @@ export default class Interacao {
                 console.log("Opção inválida. Por favor, digite 1 ou 2.")
                 this.selecionarTipoAeronave(callback) // repete
             }
-        });
+        })
     }
 
     // CRIAR FUNCIONÁRIO
     public criarFuncionario(): void {
-        this.pedirInput("ID do funcionário: ", (id) => {
+        // this.pedirInput("ID do funcionário: ", (id) => {
             this.pedirInput("Nome do funcionário: ", (nome) => {
                 this.pedirInput("Telefone do funcionário: ", (telefone) => {
                     this.pedirInput("Endereço do funcionário: ", (endereco) => {
@@ -98,7 +108,7 @@ export default class Interacao {
                             this.pedirInput("Senha do funcionário: ", (senha) => {
                                 this.selecionarNivelPermissao((nivelPermissao) => {
                                     const funcionario = new Funcionario(
-                                        id,
+                                        0,
                                         nome,
                                         telefone,
                                         endereco,
@@ -117,14 +127,14 @@ export default class Interacao {
                                     Nível de Permissão: ${funcionario.getNivelPermissao}
                                     `)
 
-                                    this.fechar()
+                                    this.iniciar()
                                 })
                             })
                         })
                     })
                 })
             })
-        })
+        // })
     }
 
     private selecionarNivelPermissao(callback: (nivelPermissao: NivelPermissao) => void): void {
@@ -168,7 +178,7 @@ export default class Interacao {
                         Peça: ${peca.getStatus}
                         `)
 
-                        this.fechar()
+                        this.iniciar()
                     })
                 })
             })
@@ -216,6 +226,6 @@ export default class Interacao {
     }
 
     private fechar(): void {
-        this.rl.close()
+        // this.rl.close()
     }
 }

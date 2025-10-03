@@ -1,14 +1,15 @@
 export default class Funcionario {
-    public id: string
+    public id: number
     public nome: string
     public telefone: string
     public endereco: string
     public usuario: string
     public senha: string
     public nivelPermissao: NivelPermissao
+    private static nextId: number = 1
 
-    constructor(id: string, nome: string, telefone: string, endereco: string, usuario: string, senha: string, nivelPermissao: NivelPermissao) {
-        this.id = id
+    constructor(id: number, nome: string, telefone: string, endereco: string, usuario: string, senha: string, nivelPermissao: NivelPermissao) {
+        this.id = Funcionario.nextId++
         this.nome = nome
         this.telefone = telefone
         this.endereco = endereco
@@ -19,7 +20,7 @@ export default class Funcionario {
 
     // getters
 
-    get getId(): string { return this.id }
+    get getId(): number { return this.id }
 
     get getNome(): string { return this.nome }
 
