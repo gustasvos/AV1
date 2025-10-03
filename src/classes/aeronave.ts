@@ -34,6 +34,10 @@ export default class Aeronave implements Salvador, Carregador {
 
     // métodos
 
+    public cadastrar = (): void => {
+        
+    }
+
     public detalhes = (): void => {
         console.log(`
         Detalhes da Aeronave ${this.getCodigo}
