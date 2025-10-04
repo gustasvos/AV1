@@ -51,14 +51,6 @@ export default class Aeronave implements Salvador, Carregador {
     }
 
     public salvar = (): void => {
-        const aeronaveData = {
-            codigo: this.getCodigo,
-            mdoelo: this.getModelo,
-            tipo: this.getTipo,
-            capacidade: this.getCapacidade,
-            alcance: this.getAlcance
-        }
-
         const publicDirPath = path.join(__dirname, '..', 'public')
         const filePath = path.join(__dirname, '..', 'public', 'aeronaves.json')
 
@@ -85,7 +77,7 @@ export default class Aeronave implements Salvador, Carregador {
 
             aeronaves.push({
                 codigo: this.getCodigo,
-                mdoelo: this.getModelo,
+                modelo: this.getModelo,
                 tipo: this.getTipo,
                 capacidade: this.getCapacidade,
                 alcance: this.getAlcance
@@ -101,7 +93,6 @@ export default class Aeronave implements Salvador, Carregador {
         }
     }
 
-    // public carregar = (): void => {
     public carregar = (): void => {
         const filePath = path.join(__dirname, '..', 'public', 'aeronaves.json')
 

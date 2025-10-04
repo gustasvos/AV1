@@ -72,6 +72,7 @@ interacao.iniciar()
 
 // let aeronave = new Aeronave(0, 'modelo1', TipoAeronave.COMERCIAL, 150, 200)
 // aeronave.salvar()
+// aeronave.carregar()
 // // let aeronave2 = new Aeronave(0, 'modelo1', TipoAeronave.MILITAR, 150, 200)
 // // let aeronave3 = new Aeronave(0, 'modelo2', TipoAeronave.COMERCIAL, 150, 200)
 // // let aeronave4 = new Aeronave(0, 'modelo2', TipoAeronave.MILITAR, 150, 500)

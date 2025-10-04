@@ -1,8 +1,11 @@
+import * as fs from 'fs'
+import path from "path"
 import Finalizador from "../interfaces/finalizador"
 import Inicializador from "../interfaces/inicializador"
+import Salvador from "../interfaces/salvador"
 import Funcionario from "./funcionario"
 
-export default class Etapa implements Inicializador, Finalizador {
+export default class Etapa implements Inicializador, Finalizador, Salvador {
     public nome: string
     public prazo: string
     public status: StatusEtapa
@@ -48,7 +51,7 @@ export default class Etapa implements Inicializador, Finalizador {
             console.log(`A etapa ${this.getNome} foi concluída.`)
         }
         else console.log(`A etapa ${this.getNome} não pode ser concluída pois não está em andamento.`)
-        
+
     }
 
     public associarFuncionario = (f: Funcionario): void => {
@@ -72,6 +75,42 @@ export default class Etapa implements Inicializador, Finalizador {
         console.log(`Funcionários associados a etapa ${this.getNome}:`)
         console.table(funcionariosNomeId)
     }
+
+    public salvar = (): void => {
+        const etapaData = {
+            nome: this.getNome,
+            prazo: this.getPrazo,
+            status: this.getStatus,
+            funcionarios: this.getFuncionarios
+        }
+
+        const publicDirPath = path.join(__dirname, '..', 'public')
+        const filePath = path.join(__dirname, '..', 'public', 'etapas.json')
+
+        if (!fs.existsSync(publicDirPath)) {
+            fs.mkdirSync(publicDirPath, { recursive: true })
+        }
+
+        try {
+            let etapas = []
+
+            if (fs.existsSync(filePath)) {
+                const data = fs.readFileSync(filePath, 'utf-8')
+                etapas = JSON.parse(data) // converte json em array de objetos
+            }
+
+            etapas.push(etapaData)
+
+            fs.writeFileSync(filePath, JSON.stringify(etapas, null, 2), 'utf-8')
+            // Aeronave.salvarNextCodigo()
+
+            console.log("Peça salva com sucesso.")
+        }
+        catch (err) {
+            console.log(`Erro ao salvar peça: ${err}`)
+        }
+    }
+
 }
 
 export enum StatusEtapa {

@@ -45,16 +45,6 @@ export default class Funcionario {
     }
 
     public salvar = (): void => {
-        const funcionarioData = {
-            id: this.getId,
-            nome: this.getNome,
-            telefone: this.getTelefone,
-            endereco: this.getEndereco,
-            usuario: this.getUsuario,
-            senha: this.getSenha,
-            nivelPermissao: this.getNivelPermissao
-        }
-
         const publicDirPath = path.join(__dirname, '..', 'public')
         const filePath = path.join(__dirname, '..', 'public', 'funcionarios.json')
 
@@ -99,7 +89,6 @@ export default class Funcionario {
         }
     }
 
-    // public carregar = (): void => {
     public carregar = (): void => {
         const filePath = path.join(__dirname, '..', 'public', 'funcionarios.json')
 
