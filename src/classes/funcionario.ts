@@ -12,6 +12,7 @@ export default class Funcionario {
     private static nextId: number = 1
 
     constructor(id: number, nome: string, telefone: string, endereco: string, usuario: string, senha: string, nivelPermissao: NivelPermissao) {
+        this.carregar()
         this.id = Funcionario.nextId++
         this.nome = nome
         this.telefone = telefone
@@ -45,12 +46,13 @@ export default class Funcionario {
 
     public salvar = (): void => {
         const funcionarioData = {
+            id: this.getId,
             nome: this.getNome,
             telefone: this.getTelefone,
             endereco: this.getEndereco,
             usuario: this.getUsuario,
             senha: this.getSenha,
-            nivelPermissao: this.nivelPermissao
+            nivelPermissao: this.getNivelPermissao
         }
 
         const publicDirPath = path.join(__dirname, '..', 'public')
@@ -68,19 +70,45 @@ export default class Funcionario {
                 funcionarios = JSON.parse(data) // converte json em array de objetos
             }
 
-            funcionarios.push(funcionarioData)
+            if (funcionarios.length === 0) {
+                // inicia valor de nextCodigo
+                funcionarios.push({ nextId: Funcionario.nextId })
+            }
+            else {
+                // atualiza nextCodigo
+                funcionarios[0].nextId = Funcionario.nextId
+            }
+
+            funcionarios.push({
+                id: this.getId,
+                nome: this.getNome,
+                telefone: this.getTelefone,
+                endereco: this.getEndereco,
+                usuario: this.getUsuario,
+                senha: this.getSenha,
+                nivelPermissao: this.getNivelPermissao
+            })
 
             fs.writeFileSync(filePath, JSON.stringify(funcionarios, null, 2), 'utf-8')
-            console.log("Funcionário salvo com sucesso.")
+            // Aeronave.salvarNextCodigo()
+
+            console.log("Funcionário salva com sucesso.")
         }
         catch (err) {
-            console.log(`Erro ao salvar funcionário: ${err}`)
+            console.log(`Erro ao salvar o funcionário: ${err}`)
         }
-
     }
-    
-    public carregar = (): void => {
 
+    // public carregar = (): void => {
+    public carregar = (): void => {
+        const filePath = path.join(__dirname, '..', 'public', 'funcionarios.json')
+
+        if (fs.existsSync(filePath)) {
+            const data = fs.readFileSync(filePath, 'utf-8')
+            const parsedData = JSON.parse(data)
+
+            Funcionario.nextId = parsedData[0].nextId || 1
+        }
     }
 
 }

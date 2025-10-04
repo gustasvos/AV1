@@ -84,7 +84,8 @@ aeronave.salvar()
 
 // // funcionario
 
-// let fun1: Funcionario = new Funcionario('2', 'Gabriel', '123123123', 'endereco y', 'gabriel-user', 'senha-gabriel', NivelPermissao.OPERADOR)
+let fun1: Funcionario = new Funcionario(0, 'Gabriel', '123123123', 'endereco y', 'gabriel-user', 'senha-gabriel', NivelPermissao.OPERADOR)
+fun1.salvar()
 // let fun2: Funcionario = new Funcionario('3', 'Ana', '111111111', 'endereco a', 'ana-user', 'ana-senha', NivelPermissao.ENGENHEIRO)
 // let fun3: Funcionario = new Funcionario('4', 'Mateus', '222222222', 'endereco m', 'mateus-user', 'mateus-senha', NivelPermissao.ENGENHEIRO)
 // let fun4: Funcionario = new Funcionario('5', 'TESTE', '55555555', 'endereco TESTE', 'TESTE-USER', 'SENHA-TESTE', NivelPermissao.ENGENHEIRO)
