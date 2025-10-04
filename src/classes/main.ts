@@ -4,6 +4,7 @@ import Etapa , { StatusEtapa } from "./etapa";
 import Funcionario, { NivelPermissao } from "./funcionario";
 import Interacao from "./interacao";
 import Peca, { StatusPeca, TipoPeca } from "./peca";
+import Teste, { ResultadoTeste, TipoTeste } from './teste';
 
 // const interacao: Interacao = new Interacao
 // interacao.iniciar()
@@ -103,8 +104,12 @@ fun1.salvar()
 
 let peca = new Peca('peca1', TipoPeca.NACIONAL, 'fornecedor1', StatusPeca.EM_PRODUCAO)
 peca.salvar()
+peca.carregar()
 // console.log(peca)
 // peca.atualizarStatus(StatusPeca.EM_TRANSPORTE)
 // console.log(peca)
+
+let teste = new Teste(TipoTeste.AERODINAMICO, ResultadoTeste.APROVADO)
+teste.salvar()
 
 // aeronave.detalhes()
