@@ -12,7 +12,7 @@ export default class Aeronave implements Salvador, Carregador {
     private static nextCodigo: number = 1
 
     constructor(codigo: number, modelo: string, tipo: TipoAeronave, capacidade: number, alcance: number) {
-        Aeronave.carregarNextCodigo()
+        this.carregar()
         this.codigo = Aeronave.nextCodigo++
         this.modelo = modelo
         this.tipo = tipo
@@ -38,19 +38,16 @@ export default class Aeronave implements Salvador, Carregador {
 
     // métodos
 
-    public cadastrar = (): void => {
-        
-    }
 
     public detalhes = (): void => {
         console.log(`
-        Detalhes da Aeronave ${this.getCodigo}
-        Código: ${this.getCodigo}
-        Modelo: ${this.getModelo}
-        Tipo: ${this.getTipo}
-        Capacidade: ${this.getCapacidade}
-        Alcance: ${this.getAlcance}
-        `)
+            Detalhes da Aeronave ${this.getCodigo}
+            Código: ${this.getCodigo}
+            Modelo: ${this.getModelo}
+            Tipo: ${this.getTipo}
+            Capacidade: ${this.getCapacidade}
+            Alcance: ${this.getAlcance}
+            `)
     }
 
     public salvar = (): void => {
@@ -77,11 +74,26 @@ export default class Aeronave implements Salvador, Carregador {
                 aeronaves = JSON.parse(data) // converte json em array de objetos
             }
 
-            aeronaves.push(aeronaveData)
+            if (aeronaves.length === 0) {
+                // inicia valor de nextCodigo
+                aeronaves.push({ nextCodigo: Aeronave.nextCodigo })
+            }
+            else {
+                // atualiza nextCodigo
+                aeronaves[0].nextCodigo = Aeronave.nextCodigo
+            }
+
+            aeronaves.push({
+                codigo: this.getCodigo,
+                mdoelo: this.getModelo,
+                tipo: this.getTipo,
+                capacidade: this.getCapacidade,
+                alcance: this.getAlcance
+            })
 
             fs.writeFileSync(filePath, JSON.stringify(aeronaves, null, 2), 'utf-8')
-            Aeronave.salvarNextCodigo()
-            
+            // Aeronave.salvarNextCodigo()
+
             console.log("Aeronave salva com sucesso.")
         }
         catch (err) {
@@ -89,28 +101,38 @@ export default class Aeronave implements Salvador, Carregador {
         }
     }
 
+    // public carregar = (): void => {
     public carregar = (): void => {
-        
-    }
-
-    // Carregar o valor do próximo código de aeronave do arquivo JSON
-    private static carregarNextCodigo(): void {
-        const filePath = path.join(__dirname, '..', 'public', 'nextCodigo.json')
+        const filePath = path.join(__dirname, '..', 'public', 'aeronaves.json')
 
         if (fs.existsSync(filePath)) {
             const data = fs.readFileSync(filePath, 'utf-8')
-            const savedData = JSON.parse(data)
-            Aeronave.nextCodigo = savedData.nextCodigo || 1
+            const parsedData = JSON.parse(data)
+
+            Aeronave.nextCodigo = parsedData[0].nextCodigo || 1
         }
     }
 
-    // Atualizar o valor do próximo código no arquivo JSON
-    private static salvarNextCodigo(): void {
-        const filePath = path.join(__dirname, '..', 'public', 'nextCodigo.json')
-        const nextCodigoData = { nextCodigo: Aeronave.nextCodigo }
+    // }
 
-        fs.writeFileSync(filePath, JSON.stringify(nextCodigoData, null, 2), 'utf-8')
-    }
+    // // Carregar o valor do próximo código de aeronave do arquivo JSON
+    // private static carregarNextCodigo(): void {
+    //     const filePath = path.join(__dirname, '..', 'public', 'nextCodigo.json')
+
+    //     if (fs.existsSync(filePath)) {
+    //         const data = fs.readFileSync(filePath, 'utf-8')
+    //         const savedData = JSON.parse(data)
+    //         Aeronave.nextCodigo = savedData.nextCodigo || 1
+    //     }
+    // }
+
+    // // Atualizar o valor do próximo código no arquivo JSON
+    // private static salvarNextCodigo(): void {
+    //     const filePath = path.join(__dirname, '..', 'public', 'nextCodigo.json')
+    //     const nextCodigoData = { nextCodigo: Aeronave.nextCodigo }
+
+    //     fs.writeFileSync(filePath, JSON.stringify(nextCodigoData, null, 2), 'utf-8')
+    // }
 }
 
 export enum TipoAeronave {
