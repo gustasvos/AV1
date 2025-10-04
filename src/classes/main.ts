@@ -5,8 +5,8 @@ import Funcionario, { NivelPermissao } from "./funcionario";
 import Interacao from "./interacao";
 import Peca, { StatusPeca, TipoPeca } from "./peca";
 
-const interacao: Interacao = new Interacao
-interacao.iniciar()
+// const interacao: Interacao = new Interacao
+// interacao.iniciar()
 
 // console.log(`
 //     1. Aeronave
@@ -69,7 +69,8 @@ interacao.iniciar()
 
 // iniciar()
 
-// let aeronave = new Aeronave(0, 'modelo1', TipoAeronave.COMERCIAL, 150, 200)
+let aeronave = new Aeronave(0, 'modelo1', TipoAeronave.COMERCIAL, 150, 200)
+aeronave.salvar()
 // let aeronave2 = new Aeronave(0, 'modelo1', TipoAeronave.MILITAR, 150, 200)
 // let aeronave3 = new Aeronave(0, 'modelo2', TipoAeronave.COMERCIAL, 150, 200)
 // let aeronave4 = new Aeronave(0, 'modelo2', TipoAeronave.MILITAR, 150, 500)

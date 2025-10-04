@@ -12,6 +12,7 @@ export default class Aeronave implements Salvador, Carregador {
     private static nextCodigo: number = 1
 
     constructor(codigo: number, modelo: string, tipo: TipoAeronave, capacidade: number, alcance: number) {
+        Aeronave.carregarNextCodigo()
         this.codigo = Aeronave.nextCodigo++
         this.modelo = modelo
         this.tipo = tipo
@@ -79,6 +80,8 @@ export default class Aeronave implements Salvador, Carregador {
             aeronaves.push(aeronaveData)
 
             fs.writeFileSync(filePath, JSON.stringify(aeronaves, null, 2), 'utf-8')
+            Aeronave.salvarNextCodigo()
+            
             console.log("Aeronave salva com sucesso.")
         }
         catch (err) {
@@ -88,6 +91,25 @@ export default class Aeronave implements Salvador, Carregador {
 
     public carregar = (): void => {
         
+    }
+
+    // Carregar o valor do próximo código de aeronave do arquivo JSON
+    private static carregarNextCodigo(): void {
+        const filePath = path.join(__dirname, '..', 'public', 'nextCodigo.json')
+
+        if (fs.existsSync(filePath)) {
+            const data = fs.readFileSync(filePath, 'utf-8')
+            const savedData = JSON.parse(data)
+            Aeronave.nextCodigo = savedData.nextCodigo || 1
+        }
+    }
+
+    // Atualizar o valor do próximo código no arquivo JSON
+    private static salvarNextCodigo(): void {
+        const filePath = path.join(__dirname, '..', 'public', 'nextCodigo.json')
+        const nextCodigoData = { nextCodigo: Aeronave.nextCodigo }
+
+        fs.writeFileSync(filePath, JSON.stringify(nextCodigoData, null, 2), 'utf-8')
     }
 }
 
