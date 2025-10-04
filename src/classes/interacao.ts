@@ -1,12 +1,12 @@
-import path from 'path';
+import path from 'path'
 import * as fs from 'fs'
-import * as readline from 'readline';
+import * as readline from 'readline'
 
-import Aeronave, { TipoAeronave } from './aeronave';
-import Funcionario, { NivelPermissao } from './funcionario';
-import Peca, { StatusPeca, TipoPeca } from './peca';
-import Teste, { ResultadoTeste, TipoTeste } from './teste';
-import Etapa, { StatusEtapa } from './etapa';
+import Aeronave, { TipoAeronave } from './aeronave'
+import Funcionario, { NivelPermissao } from './funcionario'
+import Peca, { StatusPeca, TipoPeca } from './peca'
+import Teste, { ResultadoTeste, TipoTeste } from './teste'
+import Etapa, { StatusEtapa } from './etapa'
 
 // menu inicial
 const menuInicial = (): void => {
@@ -29,7 +29,7 @@ Produção:
 
 
 export default class Interacao {
-    private rl: readline.Interface;
+    private rl: readline.Interface
 
     constructor() {
         this.rl = readline.createInterface({
@@ -49,7 +49,7 @@ export default class Interacao {
 
         menuInicial()
 
-        this.pedirInput("Escoha:", (res) => {
+        this.pedirInput("Escolha:", (res) => {
             switch (res) {
                 case '1':
                     this.criarAeronave()
@@ -65,6 +65,19 @@ export default class Interacao {
                     break
                 case '5':
                     this.criarEtapa()
+                    break
+                case '6':
+
+                    break
+                case '7':
+                    break
+                case '8':
+                    break
+                case '9':
+                    break
+                case '10':
+                    break
+                case '11':
                     break
                 default:
                     console.log("Opção inválida, tente novamente.")
@@ -89,7 +102,7 @@ export default class Interacao {
                         )
 
                         aeronave.salvar()
-                        console.log('\nAeronave cadastrada com sucesso.')
+                        console.log('\nAeronave cadastrada com sucesso.\n')
                         aeronave.detalhes()
 
                         this.iniciar()
@@ -137,7 +150,7 @@ export default class Interacao {
                                 )
 
                                 funcionario.salvar()
-                                console.log("\nFuncionário cadastrado com sucesso.")
+                                console.log("\nFuncionário cadastrado com sucesso.\n")
                                 console.log(`
                                     ID: ${funcionario.getId}
                                     Nome: ${funcionario.getNome}
@@ -191,7 +204,7 @@ export default class Interacao {
                         )
 
                         peca.salvar()
-                        console.log("\nPeça cadastrada com sucesso.")
+                        console.log("\nPeça cadastrada com sucesso.\n")
                         console.log(`
                         Nome: ${peca.getNome}
                         Tipo: ${peca.getTipo}
@@ -256,7 +269,7 @@ export default class Interacao {
                 )
 
                 teste.salvar()
-                console.log('Teste criado com sucesso.')
+                console.log('Teste criado com sucesso.\n')
                 console.log(`
                         Tipo: ${teste.getTipo}
                         Resultado: ${teste.getResultado}
@@ -309,31 +322,20 @@ export default class Interacao {
         })
     }
 
-
-    // CRIAR ETAPA
-    public criarEtapa = (): void => {
-        this.pedirInput('Nome da etapa: ', (nome) => {
-            this.pedirInput('Prazo da etapa: ', (prazo) => {
-                this.selecionarStatusEtapa((statusEtapa) => {
+    // CRIRAR ETAPA
+    public criarEtapa(): void {
+        this.pedirInput("Nome da etapa: ", (nome) => {
+            this.pedirInput("Prazo da etapa (em dias): ", (prazo) => {
+                this.selecionarStatusEtapa((status) => {
+                    // Carregar funcionários
                     this.carregarFuncionarios((funcionarios) => {
-                        this.selecionarFuncionariosEtapa(funcionarios, (funcionariosSelecionados) => {
-                            const etapa = new Etapa(
-                                nome,
-                                prazo,
-                                statusEtapa,
-                                funcionariosSelecionados
-                            )
-
-                            console.log("\nEtapa cadastrada com sucesso.")
-                            console.log(`
-                            Nome: ${etapa.getNome}
-                            Prazo: ${etapa.getPrazo}
-                            Status: ${etapa.getStatus}
-                            `)
-
-                            console.log(etapa)
-
-                            this.iniciar()
+                        // Escolher funcionários para associar à etapa
+                        this.selecionarFuncionarios(funcionarios, (funcionariosSelecionados) => {
+                            // Criar a etapa com os dados fornecidos
+                            const etapa = new Etapa(nome, prazo, status, funcionariosSelecionados)
+                            console.log("\nEtapa criada com sucesso!")
+                            etapa.listarFuncionarios() // Exibe os funcionários associados à etapa
+                            this.iniciar() // Volta para o menu principal
                         })
                     })
                 })
@@ -341,34 +343,6 @@ export default class Interacao {
         })
     }
 
-    private carregarFuncionarios(callback: (funcionarios: Funcionario[]) => void): void {
-        const filePath = path.join(__dirname, '..', 'public', 'funcionarios.json')
-        let funcionarios: Funcionario[] = []
-
-        if (fs.existsSync(filePath)) {
-            const data = fs.readFileSync(filePath, 'utf-8')
-            const jsonData = JSON.parse(data)
-
-            // map no array de objetos para pegar só os funcionários e não o nextId
-            funcionarios = jsonData.filter((item: { id: number; }) => item.id).map((item: { id: number; nome: string; telefone: string; endereco: string; usuario: string; senha: string; nivelPermissao: NivelPermissao; }) => {
-                return new Funcionario(
-                    item.id,
-                    item.nome,
-                    item.telefone,
-                    item.endereco,
-                    item.usuario,
-                    item.senha,
-                    item.nivelPermissao
-                )
-            })
-        }
-        else {
-            console.log("Nenhum funcionário encontrado.")
-        }
-
-        callback(funcionarios)
-
-    }
 
     private selecionarStatusEtapa(callback: (status: StatusEtapa) => void): void {
         console.log("\nSelecione o status da etapa:")
@@ -376,7 +350,7 @@ export default class Interacao {
         console.log("2 - ANDAMENTO")
         console.log("3 - CONCLUIDA")
 
-        this.pedirInput('Digite o número correspondente: ', (escolha) => {
+        this.pedirInput("Digite o número correspondente: ", (escolha) => {
             if (escolha === '1') {
                 callback(StatusEtapa.PENDENTE)
             } else if (escolha === '2') {
@@ -385,30 +359,78 @@ export default class Interacao {
                 callback(StatusEtapa.CONCLUIDA)
             } else {
                 console.log("Opção inválida. Por favor, digite 1, 2 ou 3.")
-                this.selecionarStatusEtapa(callback)
+                this.selecionarStatusEtapa(callback) // repete
             }
         })
     }
 
-    private selecionarFuncionariosEtapa(funcionarios: Funcionario[], callback: (funcionariosSelecionados: Funcionario[]) => void): void {
-        console.log("\nEscolha os funcionários para associar à etapa:")
+    private carregarFuncionarios(callback: (funcionarios: Funcionario[]) => void): void {
+        const filePath = path.join(__dirname, '..', 'public', 'funcionarios.json')
+        if (fs.existsSync(filePath)) {
+            const data = fs.readFileSync(filePath, 'utf-8')
+            const jsonData = JSON.parse(data)
 
-        funcionarios.forEach((funcionario, index) => {
-            console.log(`${index + 1} - ${funcionario.getNome} (ID: ${funcionario.getId})`)
-        })
+            // Ignorar o primeiro item, que é o "nextId"
+            const funcionarios = jsonData.slice(1).map((item: any) => new Funcionario(
+                item.id,
+                item.nome,
+                item.telefone,
+                item.endereco,
+                item.usuario,
+                item.senha,
+                item.nivelPermissao
+            ))
 
-        this.pedirInput('Digite os números correspondentes separados por vírgula: ', (input) => {
-            const idsSelecionados = input.split(',').map(id => parseInt(id.trim()))
-            const funcionariosSelecionados = funcionarios.filter(funcionario =>
-                idsSelecionados.includes(funcionario.getId)
-            )
-
-            if (funcionariosSelecionados.length === 0) {
-                console.log("Nenhum funcionário selecionado. Tente novamente.")
-                this.selecionarFuncionariosEtapa(funcionarios, callback) // repete
-            } else {
-                callback(funcionariosSelecionados)
-            }
-        })
+            callback(funcionarios)
+        } else {
+            console.log("Não há funcionários cadastrados.")
+            callback([])
+        }
     }
+
+    private selecionarFuncionarios(funcionarios: Funcionario[], callback: (funcionariosSelecionados: Funcionario[]) => void): void {
+        if (funcionarios.length === 0) {
+            console.log("Não há funcionários disponíveis para associar.")
+            callback([])
+            return
+        }
+
+        console.log("\nEscolha os funcionários que irão participar da etapa:")
+
+        funcionarios.forEach((f, index) => {
+            console.log(`${index + 1} - ${f.getNome} (ID: ${f.getId})`)
+        })
+
+        console.log("0 - Finalizar seleção")
+
+        let selecionados: Funcionario[] = []
+
+        const selecionarFuncionario = () => {
+            this.pedirInput("Escolha o número correspondente ao funcionário ou 0 para finalizar: ", (escolha) => {
+                const index = parseInt(escolha) - 1
+
+                if (index === -1) {
+                    // Finaliza a seleção
+                    callback(selecionados)
+                } else if (index >= 0 && index < funcionarios.length) {
+                    const funcionarioSelecionado = funcionarios[index]
+
+                    if (!selecionados.includes(funcionarioSelecionado)) {
+                        selecionados.push(funcionarioSelecionado)
+                        console.log(`${funcionarioSelecionado.getNome} foi adicionado à etapa.`)
+                        selecionarFuncionario() // Continuar a seleção
+                    } else {
+                        console.log(`${funcionarioSelecionado.getNome} já foi adicionado. Selecione outro.`)
+                        selecionarFuncionario() // Repete
+                    }
+                } else {
+                    console.log("Opção inválida. Tente novamente.")
+                    selecionarFuncionario() // Repete
+                }
+            })
+        }
+
+        selecionarFuncionario()
+    }
+
 }

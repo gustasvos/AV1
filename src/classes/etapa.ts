@@ -71,7 +71,6 @@ export default class Etapa implements Inicializador, Finalizador {
 
         console.log(`Funcionários associados a etapa ${this.getNome}:`)
         console.table(funcionariosNomeId)
-        // return (`Funcionários associados a etapa: ${this.getNome}: ${this.funcionarios.map(f => f.getNome).join(", ")}`)
     }
 }
 
