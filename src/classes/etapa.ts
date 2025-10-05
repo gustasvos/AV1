@@ -104,11 +104,23 @@ export default class Etapa implements Inicializador, Finalizador, Salvador {
             fs.writeFileSync(filePath, JSON.stringify(etapas, null, 2), 'utf-8')
             // Aeronave.salvarNextCodigo()
 
-            console.log("Peça salva com sucesso.")
+            console.log("Etapa salva com sucesso.")
         }
         catch (err) {
             console.log(`Erro ao salvar peça: ${err}`)
         }
+    }
+
+    public static carregar = (): any[] => {
+        const filePath = path.join(__dirname, '..', 'public', 'etapas.json')
+
+        if (fs.existsSync(filePath)) {
+            const data = fs.readFileSync(filePath, 'utf-8')
+            const parsedData = JSON.parse(data)
+
+            return parsedData
+        }
+        return []
     }
 
 }

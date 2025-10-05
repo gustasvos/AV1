@@ -1,9 +1,8 @@
 import * as fs from 'fs'
 import path from "path"
-import Carregador from "../interfaces/carregador"
 import Salvador from "../interfaces/salvador"
 
-export default class Peca implements Salvador, Carregador {
+export default class Peca implements Salvador {
     public nome: string
     public tipo: TipoPeca
     public fornecedor: string
@@ -72,16 +71,16 @@ export default class Peca implements Salvador, Carregador {
         }
     }
 
-    // public carregar = (): void => {
-    public carregar = (): void => {
-        const filePath = path.join(__dirname, '..', 'public', 'funcionarios.json')
+    public static carregar = (): any[] => {
+        const filePath = path.join(__dirname, '..', 'public', 'pecas.json')
 
         if (fs.existsSync(filePath)) {
             const data = fs.readFileSync(filePath, 'utf-8')
             const parsedData = JSON.parse(data)
 
-            console.log('Peças carregadas do arquivo: ', parsedData)
+            return parsedData
         }
+        return []
     }
 }
 

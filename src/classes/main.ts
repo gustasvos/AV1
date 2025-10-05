@@ -1,72 +1,7 @@
-import * as readline from 'readline';
-import Aeronave, { TipoAeronave } from "./aeronave";
-import Etapa , { StatusEtapa } from "./etapa";
-import Funcionario, { NivelPermissao } from "./funcionario";
 import Interacao from "./interacao";
-import Peca, { StatusPeca, TipoPeca } from "./peca";
-import Teste, { ResultadoTeste, TipoTeste } from './teste';
 
 const interacao: Interacao = new Interacao
 interacao.iniciar()
-
-// console.log(`
-//     1. Aeronave
-//     2. Funcionário
-//     3. Peça
-//     4. Etapa
-// `)
-
-// let rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout
-// })
-
-// rl.question("Escolha: ", (res) => {
-//     switch (res) {
-//         case '1':
-//             interacao.criarAeronave()
-//             break
-//         default:
-//             console.log("opção invalida, tente novamente.")
-//             break
-//     }
-// })
-
-// interacao.criarAeronave()
-
-// const iniciar = (): void => {
-//     const rl = readline.createInterface({
-//         input: process.stdin,
-//         output: process.stdout
-//     })
-
-//     const perguntar = () => {
-//         rl.question('Escolha uma das opções acima para cadastrar.', (o) => {
-//             switch (o) {
-//                 case '1':
-//                     console.log('teste')
-//                     // interacao.criarAeronave()
-//                     rl.close()
-//                     break
-//                 case '2':
-//                     // interacao.criarFuncionario()
-//                     // rl.close()
-//                     break
-//                 case '3':
-//                     // rl.close()
-//                     break
-//                 case '4':
-//                     // rl.close()
-//                     break
-//                 default:
-//                     console.log("Opção inválida, tente novamente.")
-//                     break
-//                     // perguntar()
-//             }
-//         })
-//     }
-//     perguntar()
-// }
 
 // iniciar()
 

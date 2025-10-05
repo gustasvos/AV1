@@ -1,9 +1,8 @@
 import * as fs from 'fs'
 import path from "path"
-import Carregador from "../interfaces/carregador"
 import Salvador from "../interfaces/salvador"
 
-export default class Aeronave implements Salvador, Carregador {
+export default class Aeronave implements Salvador {
     public codigo: number
     public modelo: string
     public tipo: TipoAeronave
@@ -12,7 +11,7 @@ export default class Aeronave implements Salvador, Carregador {
     private static nextCodigo: number = 1
 
     constructor(codigo: number, modelo: string, tipo: TipoAeronave, capacidade: number, alcance: number) {
-        this.carregar()
+        Aeronave.carregar()
         this.codigo = Aeronave.nextCodigo++
         this.modelo = modelo
         this.tipo = tipo
@@ -32,22 +31,18 @@ export default class Aeronave implements Salvador, Carregador {
 
     get getAlcance(): number { return this.alcance }
 
-    // setters
-
-    // set setCodigo(novoCodigo) { return this.codigo = novoCodigo }
-
     // métodos
 
 
-    public detalhes = (): void => {
-        console.log(`
+    public detalhes = (): string => {
+        return `
             Detalhes da Aeronave ${this.getCodigo}
             Código: ${this.getCodigo}
             Modelo: ${this.getModelo}
             Tipo: ${this.getTipo}
             Capacidade: ${this.getCapacidade}
             Alcance: ${this.getAlcance}
-            `)
+            `
     }
 
     public salvar = (): void => {
@@ -93,7 +88,7 @@ export default class Aeronave implements Salvador, Carregador {
         }
     }
 
-    public carregar = (): void => {
+    public static carregar = (): any[] => {
         const filePath = path.join(__dirname, '..', 'public', 'aeronaves.json')
 
         if (fs.existsSync(filePath)) {
@@ -101,7 +96,9 @@ export default class Aeronave implements Salvador, Carregador {
             const parsedData = JSON.parse(data)
 
             Aeronave.nextCodigo = parsedData[0].nextCodigo || 1
+            return parsedData.slice(1)
         }
+        return []
     }
 
     // }

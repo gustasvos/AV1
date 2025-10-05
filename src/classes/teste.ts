@@ -1,9 +1,8 @@
 import * as fs from 'fs'
 import path from "path"
-import Carregador from "../interfaces/carregador"
 import Salvador from "../interfaces/salvador"
 
-export default class Teste implements Salvador, Carregador {
+export default class Teste implements Salvador {
     public tipo: TipoTeste
     public resultado: ResultadoTeste
 
@@ -49,7 +48,6 @@ export default class Teste implements Salvador, Carregador {
         }
     }
 
-    // public carregar = (): void => {
     public carregar = (): void => {
         const filePath = path.join(__dirname, '..', 'public', 'testes.json')
 

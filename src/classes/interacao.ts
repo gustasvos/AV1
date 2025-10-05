@@ -7,6 +7,7 @@ import Funcionario, { NivelPermissao } from './funcionario'
 import Peca, { StatusPeca, TipoPeca } from './peca'
 import Teste, { ResultadoTeste, TipoTeste } from './teste'
 import Etapa, { StatusEtapa } from './etapa'
+import Relatorio from './relatorio'
 
 // menu inicial
 const menuInicial = (): void => {
@@ -20,10 +21,7 @@ Items a cadastrar:
 3. Peça
 4. Teste
 5. Etapa
-
-Produção:
-
-6. Iniciar produção
+6. Gerar relatório
 `)
 }
 
@@ -67,17 +65,7 @@ export default class Interacao {
                     this.criarEtapa()
                     break
                 case '6':
-
-                    break
-                case '7':
-                    break
-                case '8':
-                    break
-                case '9':
-                    break
-                case '10':
-                    break
-                case '11':
+                    this.criarRelatorio()
                     break
                 default:
                     console.log("Opção inválida, tente novamente.")
@@ -88,7 +76,6 @@ export default class Interacao {
 
     // CRIAR AERONAVE
     public criarAeronave(): void {
-        // this.pedirInput("Código da aeronave: ", (codigo) => {
         this.pedirInput("Modelo da aeronave: ", (modelo) => {
             this.pedirInput("Capacidade da aeronave: ", (capacidade) => {
                 this.pedirInput("Alcance da aeronave (em km): ", (alcance) => {
@@ -109,7 +96,6 @@ export default class Interacao {
                     })
                 })
             })
-            // })
         })
     }
 
@@ -132,7 +118,6 @@ export default class Interacao {
 
     // CRIAR FUNCIONÁRIO
     public criarFuncionario(): void {
-        // this.pedirInput("ID do funcionário: ", (id) => {
         this.pedirInput("Nome do funcionário: ", (nome) => {
             this.pedirInput("Telefone do funcionário: ", (telefone) => {
                 this.pedirInput("Endereço do funcionário: ", (endereco) => {
@@ -167,7 +152,6 @@ export default class Interacao {
                 })
             })
         })
-        // })
     }
 
     private selecionarNivelPermissao(callback: (nivelPermissao: NivelPermissao) => void): void {
@@ -185,7 +169,7 @@ export default class Interacao {
                 callback(NivelPermissao.OPERADOR)
             } else {
                 console.log("Opção inválida. Por favor, digite 1, 2 ou 3.")
-                this.selecionarNivelPermissao(callback) // Repete a pergunta se a opção for inválida
+                this.selecionarNivelPermissao(callback) // repete
             }
         })
     }
@@ -231,7 +215,7 @@ export default class Interacao {
                 callback(TipoPeca.IMPORTADA)
             } else {
                 console.log("Opção inválida. Por favor, digite uma das opções disponíveis.")
-                this.selecionarTipoPeca(callback) // Repete a pergunta se a opção for inválida
+                this.selecionarTipoPeca(callback) // repete a pergunta
             }
         })
     }
@@ -327,15 +311,15 @@ export default class Interacao {
         this.pedirInput("Nome da etapa: ", (nome) => {
             this.pedirInput("Prazo da etapa (em dias): ", (prazo) => {
                 this.selecionarStatusEtapa((status) => {
-                    // Carregar funcionários
                     this.carregarFuncionarios((funcionarios) => {
-                        // Escolher funcionários para associar à etapa
                         this.selecionarFuncionarios(funcionarios, (funcionariosSelecionados) => {
-                            // Criar a etapa com os dados fornecidos
                             const etapa = new Etapa(nome, prazo, status, funcionariosSelecionados)
+
+                            etapa.salvar()
                             console.log("\nEtapa criada com sucesso!")
-                            etapa.listarFuncionarios() // Exibe os funcionários associados à etapa
-                            this.iniciar() // Volta para o menu principal
+                            etapa.listarFuncionarios()
+
+                            this.iniciar()
                         })
                     })
                 })
@@ -370,7 +354,7 @@ export default class Interacao {
             const data = fs.readFileSync(filePath, 'utf-8')
             const jsonData = JSON.parse(data)
 
-            // Ignorar o primeiro item, que é o "nextId"
+            // ignora o nextId
             const funcionarios = jsonData.slice(1).map((item: any) => new Funcionario(
                 item.id,
                 item.nome,
@@ -418,14 +402,14 @@ export default class Interacao {
                     if (!selecionados.includes(funcionarioSelecionado)) {
                         selecionados.push(funcionarioSelecionado)
                         console.log(`${funcionarioSelecionado.getNome} foi adicionado à etapa.`)
-                        selecionarFuncionario() // Continuar a seleção
+                        selecionarFuncionario() // continuar a seleção
                     } else {
                         console.log(`${funcionarioSelecionado.getNome} já foi adicionado. Selecione outro.`)
-                        selecionarFuncionario() // Repete
+                        selecionarFuncionario() // repete
                     }
                 } else {
                     console.log("Opção inválida. Tente novamente.")
-                    selecionarFuncionario() // Repete
+                    selecionarFuncionario() // repete
                 }
             })
         }
@@ -433,4 +417,31 @@ export default class Interacao {
         selecionarFuncionario()
     }
 
+    // RELATÓRIO
+    public criarRelatorio = (): void => {
+        this.pedirInput("Digite o código da aeronave para gerar o relatório: ", (codigoInput) => {
+            const codigo = parseInt(codigoInput)
+
+            const aeronaves = Aeronave.carregar()
+            const aeronaveEncontrada = aeronaves.find((aeronave: any) => aeronave.codigo === codigo)
+
+            if (aeronaveEncontrada) {
+                const aeronave = new Aeronave(
+                    aeronaveEncontrada.codigo,
+                    aeronaveEncontrada.modelo,
+                    aeronaveEncontrada.tipo,
+                    aeronaveEncontrada.capacidade,
+                    aeronaveEncontrada.alcance
+                )
+
+                const relatorio = new Relatorio()
+                relatorio.salvarEmArquivo(aeronave)
+
+            } else {
+                console.log("Aeronave com o código fornecido não encontrada.")
+            }
+
+            this.iniciar()
+        })
+    }
 }
